@@ -21,7 +21,20 @@ def create_app(config_class=Config):
 
     # Register blueprints
     from app.routes.auth import auth_bp
+    from app.routes.profile import profile_bp
+    from app.routes.projects import projects_bp
+    from app.routes.skills import skills_bp
+    from app.routes.experience import experience_bp
+    from app.routes.services import services_bp
+    from app.routes.blogs import blogs_bp
+
     app.register_blueprint(auth_bp)
+    app.register_blueprint(profile_bp)
+    app.register_blueprint(projects_bp)
+    app.register_blueprint(skills_bp)
+    app.register_blueprint(experience_bp)
+    app.register_blueprint(services_bp)
+    app.register_blueprint(blogs_bp)
 
     # Health check route
     @app.route("/api/health", methods=["GET"])
@@ -56,8 +69,18 @@ def create_app(config_class=Config):
 
     # Create tables automatically in development
     with app.app_context():
-        # Import models so SQLAlchemy discovers them
-        from app.models.user import User  # noqa: F401
+        # Import models so SQLAlchemy discovers them all before creating tables
+        from app.models import (  # noqa: F401
+            User,
+            Profile,
+            Project,
+            Skill,
+            Experience,
+            Education,
+            Service,
+            Testimonial,
+            Blog
+        )
         db.create_all()
 
     return app
