@@ -5,6 +5,7 @@ from app.models.skill import Skill
 from app.models.experience import Experience, Education
 from app.models.service import Service, Testimonial
 from app.models.blog import Blog
+from app.models.message import Message
 
 __all__ = [
     "User",
@@ -15,5 +16,6 @@ __all__ = [
     "Education",
     "Service",
     "Testimonial",
-    "Blog"
+    "Blog",
+    "Message"
 ]

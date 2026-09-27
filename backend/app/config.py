@@ -28,6 +28,16 @@ class Config:
     raw_cors = os.getenv("CORS_ORIGINS", "http://localhost:3000,http://localhost:5173,http://localhost:5174")
     CORS_ORIGINS = [origin.strip() for origin in raw_cors.split(",") if origin.strip()]
 
-    # Media Upload Folder (Relative to project)
+    # Media Upload Folder (Relative to project root)
     UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "uploads")
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16 MB max upload
+    ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp", "gif", "svg", "pdf"}
+
+    # Email notification settings (Optional, uses console log fallback if not configured)
+    MAIL_SERVER = os.getenv("MAIL_SERVER", "")
+    MAIL_PORT = int(os.getenv("MAIL_PORT", 587))
+    MAIL_USE_TLS = os.getenv("MAIL_USE_TLS", "true").lower() in ["true", "1", "yes"]
+    MAIL_USERNAME = os.getenv("MAIL_USERNAME", "")
+    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD", "")
+    MAIL_DEFAULT_SENDER = os.getenv("MAIL_DEFAULT_SENDER", "")
+    NOTIFICATION_EMAIL = os.getenv("NOTIFICATION_EMAIL", "admin@portfolio.com")

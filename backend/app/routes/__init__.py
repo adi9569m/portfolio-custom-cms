@@ -5,6 +5,8 @@ from app.routes.skills import skills_bp
 from app.routes.experience import experience_bp
 from app.routes.services import services_bp
 from app.routes.blogs import blogs_bp
+from app.routes.upload import upload_bp
+from app.routes.contact import contact_bp
 
 __all__ = [
     "auth_bp",
@@ -13,5 +15,7 @@ __all__ = [
     "skills_bp",
     "experience_bp",
     "services_bp",
-    "blogs_bp"
+    "blogs_bp",
+    "upload_bp",
+    "contact_bp"
 ]

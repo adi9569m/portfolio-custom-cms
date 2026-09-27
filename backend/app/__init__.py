@@ -1,3 +1,4 @@
+import os
 from flask import Flask, jsonify
 from app.config import Config
 from app.extensions import db, jwt, cors, migrate
@@ -27,6 +28,8 @@ def create_app(config_class=Config):
     from app.routes.experience import experience_bp
     from app.routes.services import services_bp
     from app.routes.blogs import blogs_bp
+    from app.routes.upload import upload_bp
+    from app.routes.contact import contact_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(profile_bp)
@@ -35,6 +38,8 @@ def create_app(config_class=Config):
     app.register_blueprint(experience_bp)
     app.register_blueprint(services_bp)
     app.register_blueprint(blogs_bp)
+    app.register_blueprint(upload_bp)
+    app.register_blueprint(contact_bp)
 
     # Health check route
     @app.route("/api/health", methods=["GET"])
@@ -67,6 +72,11 @@ def create_app(config_class=Config):
             "code": "token_expired"
         }), 401
 
+    # Ensure uploads folder exists
+    upload_folder = app.config.get("UPLOAD_FOLDER")
+    if upload_folder:
+        os.makedirs(upload_folder, exist_ok=True)
+
     # Create tables automatically in development
     with app.app_context():
         # Import models so SQLAlchemy discovers them all before creating tables
@@ -79,7 +89,8 @@ def create_app(config_class=Config):
             Education,
             Service,
             Testimonial,
-            Blog
+            Blog,
+            Message
         )
         db.create_all()
 
