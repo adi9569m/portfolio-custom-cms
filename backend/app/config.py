@@ -26,7 +26,10 @@ class Config:
 
     # CORS
     raw_cors = os.getenv("CORS_ORIGINS", "http://localhost:3000,http://localhost:5173,http://localhost:5174")
-    CORS_ORIGINS = [origin.strip() for origin in raw_cors.split(",") if origin.strip()]
+    if raw_cors.strip() == "*":
+        CORS_ORIGINS = ["*"]
+    else:
+        CORS_ORIGINS = [origin.strip() for origin in raw_cors.split(",") if origin.strip()]
 
     # Media Upload Folder (Relative to project root)
     UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "uploads")
